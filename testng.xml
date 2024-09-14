@@ -1,23 +1,22 @@
-<!--<?xml version="1.0" encoding="UTF-8"?>-->
-<!--<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">-->
-<!--<suite name="All Test Suite"><test verbose="2" preserve-order="true" name="C:/Users/admin/OneDrive/Desktop/Uniblox_assigment/Uniblox_automation-assignment">-->
-<!--    <classes>-->
-<!--        <class name="tests.UrlFlowTest">-->
-<!--        <methods>-->
-<!--            <include name="testPageLoadsAndHeaderIsVisible"/>-->
-<!--        </methods>-->
-<!--        </class>-->
-<!--    </classes>-->
-<!--</test>-->
-<!--</suite>-->
-
-<plugin>
-    <groupId>org.apache.maven.plugins</groupId>
-    <artifactId>maven-surefire-plugin</artifactId>
-    <version>3.0.0-M7</version>
-    <configuration>
-        <suiteXmlFiles>
-            <suiteXmlFile>${testng.xml}</suiteXmlFile>
-        </suiteXmlFiles>
-    </configuration>
-</plugin>
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Uniblox Automation Test Suite" verbose="1">
+    <listeners>
+        <listener class-name="listeners.TestListener"/>
+    </listeners>
+    
+    <test name="App Selector Flow Tests" preserve-order="true">
+        <classes>
+            <class name="tests.UrlFlowTest">
+                <methods>
+                    <include name="testPageLoadsAndHeaderIsVisible"/>
+                    <include name="testCompleteUserFlow"/>
+                    <include name="testFormValidation"/>
+                    <include name="testNavigationFlow"/>
+                    <include name="testPageResponsiveness"/>
+                    <include name="testCrossBrowserCompatibility"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>
