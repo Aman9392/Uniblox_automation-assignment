@@ -5,10 +5,8 @@ import org.testng.ITestResult;
 import org.testng.ITestContext;
 import utils.ReportManager;
 
-/**
- * TestListener class for TestNG integration with ExtentReports
- * Handles test execution events and updates the report accordingly
- */
+// TestListener for TestNG integration with ExtentReports
+// Handles test execution events and updates the report
 public class TestListener implements ITestListener {
     
     @Override

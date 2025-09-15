@@ -9,10 +9,8 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
 
-/**
- * WebDriverManager utility class for managing browser instances
- * Supports Chrome, Firefox, and Edge browsers
- */
+// WebDriverManager utility for managing browser instances
+// Supports Chrome, Firefox, and Edge
 public class WebDriverManagerUtil {
     
     private static final String CHROME = "chrome";
@@ -20,9 +18,9 @@ public class WebDriverManagerUtil {
     private static final String EDGE = "edge";
     
     /**
-     * Creates and returns a WebDriver instance based on the specified browser
-     * @param browserName Name of the browser (chrome, firefox, edge)
-     * @return WebDriver instance
+     Creates and returns a WebDriver instance based on the specified browser
+     @param browserName Name of the browser (chrome, firefox, edge)
+     @return WebDriver instance
      */
     public static WebDriver createDriver(String browserName) {
         WebDriver driver;
@@ -34,6 +32,14 @@ public class WebDriverManagerUtil {
                 chromeOptions.addArguments("--start-maximized");
                 chromeOptions.addArguments("--disable-notifications");
                 chromeOptions.addArguments("--disable-popup-blocking");
+                // Headless for speed, controlled via config
+                if (Boolean.parseBoolean(TestDataManager.getProperty("headless", "true"))) {
+                    chromeOptions.addArguments("--headless=new");
+                    chromeOptions.addArguments("--window-size=1366,768");
+                }
+                // Faster page load: disable images and use eager strategy
+                chromeOptions.addArguments("--blink-settings=imagesEnabled=false");
+                chromeOptions.setPageLoadStrategy(org.openqa.selenium.PageLoadStrategy.EAGER);
                 driver = new ChromeDriver(chromeOptions);
                 break;
                 
@@ -59,8 +65,8 @@ public class WebDriverManagerUtil {
     }
     
     /**
-     * Creates a Chrome driver with default settings
-     * @return Chrome WebDriver instance
+     Creates a Chrome driver with default settings
+     @return Chrome WebDriver instance
      */
     public static WebDriver createChromeDriver() {
         return createDriver(CHROME);

@@ -3,7 +3,7 @@
 ## Project Description
 This is a Selenium-based test automation framework built for testing the Uniblox application. The framework uses Java, TestNG, and follows the Page Object Model design pattern to ensure maintainable and scalable test automation.
 
-**Test URL**: https://d28j9pfwubj8q5.cloudfront.net/5U5PU/4oKeg/app-selector
+**Test URL**: https://d28j9pfwubj8q5.cloudfront.net/5U5PU/4oKeg
 
 ## Project Structure
 
@@ -43,7 +43,7 @@ mvn clean install
 
 ### 3. Run tests
 
-mvn test
+mvn clean test
 
 
 ## Test Cases

@@ -11,10 +11,8 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-/**
- * ReportManager utility class for managing test reports
- * Provides ExtentReports integration for comprehensive test reporting
- */
+// ReportManager: manages test reports using ExtentReports
+// Creates a clean report directory each run and attaches screenshots
 public class ReportManager {
     
     private static ExtentReports extent;
@@ -23,8 +21,8 @@ public class ReportManager {
     private static final String SCREENSHOT_DIR = "test-output/screenshots/";
     
     /**
-     * Initializes the ExtentReports instance
-     * @return ExtentReports instance
+     Initializes the ExtentReports instance
+     @return ExtentReports instance
      */
     public static ExtentReports getInstance() {
         if (extent == null) {
@@ -34,10 +32,13 @@ public class ReportManager {
     }
     
     /**
-     * Creates a new ExtentReports instance with configuration
+     Creates a new ExtentReports instance with configuration
      */
     private static void createInstance() {
         // Create report directory if it doesn't exist
+        // Clean old reports and screenshots to keep only latest run
+        cleanDirectory(REPORT_DIR);
+        cleanDirectory(SCREENSHOT_DIR);
         createDirectory(REPORT_DIR);
         createDirectory(SCREENSHOT_DIR);
         
@@ -68,10 +69,10 @@ public class ReportManager {
     }
     
     /**
-     * Creates a new test in the report
-     * @param testName Name of the test
-     * @param description Description of the test
-     * @return ExtentTest instance
+     Creates a new test in the report
+     @param testName Name of the test
+     @param description Description of the test
+     @return ExtentTest instance
      */
     public static ExtentTest createTest(String testName, String description) {
         test = getInstance().createTest(testName, description);
@@ -79,9 +80,9 @@ public class ReportManager {
     }
     
     /**
-     * Logs a message to the current test
-     * @param status Status of the log message
-     * @param message Message to log
+     Logs a message to the current test
+     @param status Status of the log message
+     @param message Message to log
      */
     public static void log(Status status, String message) {
         if (test != null) {
@@ -90,49 +91,49 @@ public class ReportManager {
     }
     
     /**
-     * Logs an info message
-     * @param message Message to log
+     Logs an info message
+     @param message Message to log
      */
     public static void logInfo(String message) {
         log(Status.INFO, message);
     }
     
     /**
-     * Logs a pass message
-     * @param message Message to log
+     Logs a pass message
+     @param message Message to log
      */
     public static void logPass(String message) {
         log(Status.PASS, message);
     }
     
     /**
-     * Logs a fail message
-     * @param message Message to log
+     Logs a fail message
+     @param message Message to log
      */
     public static void logFail(String message) {
         log(Status.FAIL, message);
     }
     
     /**
-     * Logs a skip message
-     * @param message Message to log
+     Logs a skip message
+     @param message Message to log
      */
     public static void logSkip(String message) {
         log(Status.SKIP, message);
     }
     
     /**
-     * Logs a warning message
-     * @param message Message to log
+     Logs a warning message
+     @param message Message to log
      */
     public static void logWarning(String message) {
         log(Status.WARNING, message);
     }
     
     /**
-     * Adds a screenshot to the current test
-     * @param driver WebDriver instance
-     * @param screenshotName Name for the screenshot
+     Adds a screenshot to the current test
+     @param driver WebDriver instance
+     @param screenshotName Name for the screenshot
      */
     public static void addScreenshot(WebDriver driver, String screenshotName) {
         if (test != null && driver != null) {
@@ -147,10 +148,10 @@ public class ReportManager {
     }
     
     /**
-     * Takes a screenshot and saves it to the screenshots directory
-     * @param driver WebDriver instance
-     * @param screenshotName Name for the screenshot
-     * @return Path to the saved screenshot
+     Takes a screenshot and saves it to the screenshots directory
+     @param driver WebDriver instance
+     @param screenshotName Name for the screenshot
+     @return Path to the saved screenshot
      */
     private static String takeScreenshot(WebDriver driver, String screenshotName) {
         try {
@@ -173,9 +174,9 @@ public class ReportManager {
     }
     
     /**
-     * Updates test result based on test status
-     * @param status Test status (SUCCESS, FAILURE, SKIP)
-     * @param message Test result message
+     Updates test result based on test status
+     @param status Test status (SUCCESS, FAILURE, SKIP)
+     @param message Test result message
      */
     public static void updateTestResult(int status, String message) {
         if (test != null) {
@@ -196,7 +197,7 @@ public class ReportManager {
     }
     
     /**
-     * Flushes the report to ensure all data is written
+     Flushes the report to ensure all data is written
      */
     public static void flushReport() {
         if (extent != null) {
@@ -205,8 +206,8 @@ public class ReportManager {
     }
     
     /**
-     * Creates a directory if it doesn't exist
-     * @param directoryPath Path to the directory
+     Creates a directory if it doesn't exist
+     @param directoryPath Path to the directory
      */
     private static void createDirectory(String directoryPath) {
         File directory = new File(directoryPath);
@@ -214,10 +215,45 @@ public class ReportManager {
             directory.mkdirs();
         }
     }
+
+    /**
+     Deletes all files under a directory if it exists.
+     @param directoryPath path to clean
+     */
+    private static void cleanDirectory(String directoryPath) {
+        try {
+            File dir = new File(directoryPath);
+            if (dir.exists() && dir.isDirectory()) {
+                File[] files = dir.listFiles();
+                if (files != null) {
+                    for (File f : files) {
+                        if (f.isDirectory()) {
+                            // Recursively delete subdir content
+                            deleteRecursively(f);
+                        } else {
+                            f.delete();
+                        }
+                    }
+                }
+            }
+        } catch (Exception ignored) {}
+    }
+
+    private static void deleteRecursively(File file) {
+        if (file.isDirectory()) {
+            File[] children = file.listFiles();
+            if (children != null) {
+                for (File c : children) {
+                    deleteRecursively(c);
+                }
+            }
+        }
+        try { file.delete(); } catch (Exception ignored) {}
+    }
     
     /**
-     * Gets the current test instance
-     * @return Current ExtentTest instance
+     Gets the current test instance
+     @return Current ExtentTest instance
      */
     public static ExtentTest getCurrentTest() {
         return test;

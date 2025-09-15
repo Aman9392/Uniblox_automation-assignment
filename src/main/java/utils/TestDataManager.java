@@ -5,10 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-/**
- * TestDataManager utility class for managing test data
- * Loads test data from properties files
- */
+// TestDataManager: loads test data from properties files
 public class TestDataManager {
     
     private static Properties properties;
@@ -19,7 +16,7 @@ public class TestDataManager {
     }
     
     /**
-     * Loads properties from the configuration file
+     Loads properties from the configuration file
      */
     private static void loadProperties() {
         properties = new Properties();
@@ -33,7 +30,7 @@ public class TestDataManager {
     }
     
     /**
-     * Sets default properties if config file is not found
+     Sets default properties if config file is not found
      */
     private static void setDefaultProperties() {
         properties.setProperty("app.url", "https://d28j9pfwubj8q5.cloudfront.net/5U5PU/4oKeg/app-selector");
@@ -43,53 +40,54 @@ public class TestDataManager {
     }
     
     /**
-     * Gets a property value by key
-     * @param key Property key
-     * @return Property value
+     Gets a property value by key
+     @param key Property key
+     @return Property value
      */
     public static String getProperty(String key) {
         return properties.getProperty(key);
     }
     
     /**
-     * Gets a property value with default value
-     * @param key Property key
-     * @param defaultValue Default value if key not found
-     * @return Property value or default value
+     Gets a property value with default value
+     @param key Property key
+     @param defaultValue Default value if key not found
+     @return Property value or default value
      */
     public static String getProperty(String key, String defaultValue) {
         return properties.getProperty(key, defaultValue);
     }
     
     /**
-     * Gets the application URL
-     * @return Application URL
+     Gets the application URL
+     @return Application URL
      */
     public static String getAppUrl() {
         return getProperty("app.url");
     }
     
     /**
-     * Gets the browser name
-     * @return Browser name
+     Gets the browser name
+     @return Browser name
      */
     public static String getBrowser() {
         return getProperty("browser", "chrome");
     }
     
     /**
-     * Gets the timeout value
-     * @return Timeout in seconds
+     Gets the timeout value
+     @return Timeout in seconds
      */
     public static int getTimeout() {
         return Integer.parseInt(getProperty("timeout", "10"));
     }
     
     /**
-     * Gets the implicit wait value
-     * @return Implicit wait in seconds
+     Gets the implicit wait value
+     @return Implicit wait in seconds
      */
     public static int getImplicitWait() {
         return Integer.parseInt(getProperty("implicit.wait", "5"));
     }
 }
+
