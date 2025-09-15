@@ -65,8 +65,8 @@ browser=chrome  # Options: chrome, firefox, edge
 
 
 ### Test Data
-test.user.name=Test User
-test.user.email=test@example.com
+-test.user.name=Test User
+-test.user.email=test@example.com
 
 
 ### Run all tests
